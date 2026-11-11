@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Organizador de Rotinas Moderno</title>
+  <title>Organizador de Rotinas Moderno 3D</title>
+  <!-- Arquivo de estilos CSS externo -->
   <link rel="stylesheet" href="style.css">
+  <!-- Biblioteca Three.js via CDN para os Objetos 3D -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
 
-  <!-- Elementos 3D Flutuantes de Fundo -->
-  <div class="bg-shape shape-1"></div>
-  <div class="bg-shape shape-2"></div>
-  <div class="bg-shape shape-3"></div>
-  <div class="bg-shape shape-4"></div>
+  <!-- Canvas onde os Objetos 3D 3D flutuantes serão renderizados -->
+  <canvas id="bg-3d"></canvas>
 
-  <!-- Conteúdo Principal -->
+  <!-- Conteúdo Principal da Aplicação -->
   <div class="container">
     <header class="header">
       <h1 class="title-3d">Minha Rotina <span>Diária</span></h1>
-      <p class="subtitle">Organize seu dia com foco, equilíbrio e alta performance.</p>
+      <p class="subtitle">Organize seu dia com foco, equilíbrio e alta performance visual.</p>
     </header>
 
     <main class="grid-container">
@@ -27,7 +27,7 @@
       <div class="card" onclick="openModal('estudo')">
         <div class="card-icon">📚</div>
         <h3>Estudos</h3>
-        <p>Aprimoramento contínuo, leitura e cursos.</p>
+        <p>Aprimoramento contínuo, leitura e práticas de tecnologia.</p>
         <span class="card-badge">Foco</span>
       </div>
 
@@ -35,7 +35,7 @@
       <div class="card" onclick="openModal('trabalho')">
         <div class="card-icon">💼</div>
         <h3>Trabalho</h3>
-        <p>Projetos, reuniões e entregas prioritárias.</p>
+        <p>Projetos, reuniões e entregas prioritárias de alto valor.</p>
         <span class="card-badge">Produção</span>
       </div>
 
@@ -43,7 +43,7 @@
       <div class="card" onclick="openModal('lazer')">
         <div class="card-icon">🎬</div>
         <h3>Lazer</h3>
-        <p>Filmes, séries e momentos de descanso.</p>
+        <p>Filmes, séries e momentos de descanso merecido.</p>
         <span class="card-badge">Desconexão</span>
       </div>
 
@@ -51,7 +51,7 @@
       <div class="card" onclick="openModal('hobby')">
         <div class="card-icon">🎨</div>
         <h3>Hobby</h3>
-        <p>Criatividade, música e paixões pessoais.</p>
+        <p>Criatividade, música e paixões pessoais sem pressão.</p>
         <span class="card-badge">Criação</span>
       </div>
 
@@ -59,7 +59,7 @@
       <div class="card" onclick="openModal('esportes')">
         <div class="card-icon">⚡</div>
         <h3>Esportes</h3>
-        <p>Treinos, mobilidade e exercícios físicos.</p>
+        <p>Treinos, corrida, musculação e energia física.</p>
         <span class="card-badge">Energia</span>
       </div>
 
@@ -79,63 +79,191 @@
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal()">&times;</button>
       <div id="modal-body">
-        <!-- O conteúdo será preenchido via JavaScript -->
+        <!-- O conteúdo é preenchido dinamicamente via JS -->
       </div>
     </div>
   </div>
 
-  <!-- Código JavaScript Embutido -->
+  <!-- JavaScript Embutido conforme Requisito 6 -->
   <script>
-    // Dados detalhados para cada categoria de rotina
+    // ==========================================
+    // 1. CONFIGURAÇÃO DAS FORMAS 3D (THREE.JS)
+    // ==========================================
+    const canvas = document.getElementById('bg-3d');
+    const scene = new THREE.Scene();
+
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+    camera.position.z = 30;
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      alpha: true,
+      antialias: true
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Iluminação 3D com a Paleta de Cores (Roxo, Azul Neon, Rosa Magenta)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    scene.add(ambientLight);
+
+    const light1 = new THREE.PointLight(0x8a2be2, 3, 100);
+    light1.position.set(20, 20, 20);
+    scene.add(light1);
+
+    const light2 = new THREE.PointLight(0x00d2ff, 3, 100);
+    light2.position.set(-20, -20, 20);
+    scene.add(light2);
+
+    const light3 = new THREE.PointLight(0xff007f, 3, 100);
+    light3.position.set(0, 20, -10);
+    scene.add(light3);
+
+    // Criação dos Objetos Geométricos 3D
+    const shapes = [];
+    const geometries = [
+      new THREE.TorusGeometry(3.5, 1.2, 16, 100),
+      new THREE.IcosahedronGeometry(3, 0),
+      new THREE.OctahedronGeometry(3.5, 0),
+      new THREE.TorusKnotGeometry(2.5, 0.7, 100, 16),
+      new THREE.SphereGeometry(3, 32, 32),
+      new THREE.BoxGeometry(3.5, 3.5, 3.5)
+    ];
+
+    const materials = [
+      new THREE.MeshPhongMaterial({ color: 0x8a2be2, shininess: 100, wireframe: false }),
+      new THREE.MeshPhongMaterial({ color: 0x00d2ff, shininess: 100, wireframe: false }),
+      new THREE.MeshPhongMaterial({ color: 0xff007f, shininess: 100, wireframe: false }),
+      new THREE.MeshPhongMaterial({ color: 0x8a2be2, wireframe: true }),
+      new THREE.MeshPhongMaterial({ color: 0x00d2ff, wireframe: true }),
+      new THREE.MeshPhongMaterial({ color: 0xff007f, wireframe: true })
+    ];
+
+    // Espalhando 16 objetos 3D flutuantes no espaço 3D
+    for (let i = 0; i < 16; i++) {
+      const geom = geometries[i % geometries.length];
+      const mat = materials[i % materials.length];
+      const mesh = new THREE.Mesh(geom, mat);
+
+      mesh.position.x = (Math.random() - 0.5) * 60;
+      mesh.position.y = (Math.random() - 0.5) * 60;
+      mesh.position.z = (Math.random() - 0.5) * 40 - 10;
+
+      mesh.rotation.x = Math.random() * Math.PI;
+      mesh.rotation.y = Math.random() * Math.PI;
+
+      mesh.userData = {
+        rotSpeedX: (Math.random() - 0.5) * 0.015,
+        rotSpeedY: (Math.random() - 0.5) * 0.015,
+        floatSpeed: 0.001 + Math.random() * 0.002,
+        initialY: mesh.position.y
+      };
+
+      scene.add(mesh);
+      shapes.push(mesh);
+    }
+
+    // Interatividade 3D: Reação da Câmera ao Mover o Mouse (Parallax)
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX - window.innerWidth / 2) * 0.02;
+      mouseY = (e.clientY - window.innerHeight / 2) * 0.02;
+    });
+
+    // Loop de Animação 3D
+    let clock = new THREE.Clock();
+
+    function animate() {
+      requestAnimationFrame(animate);
+      const elapsedTime = clock.getElapsedTime();
+
+      // Suavização do movimento da câmera (lerp)
+      targetX += (mouseX - targetX) * 0.05;
+      targetY += (mouseY - targetY) * 0.05;
+
+      camera.position.x = targetX;
+      camera.position.y = -targetY;
+      camera.lookAt(scene.position);
+
+      // Rotacionar e movimentar cada objeto 3D
+      shapes.forEach((shape, index) => {
+        shape.rotation.x += shape.userData.rotSpeedX;
+        shape.rotation.y += shape.userData.rotSpeedY;
+        shape.position.y = shape.userData.initialY + Math.sin(elapsedTime * 1.5 + index) * 2;
+      });
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Redimensionamento responsivo do Canvas 3D
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // ==========================================
+    // 2. LÓGICA DO MODAL DA ROTINA
+    // ==========================================
     const routineDetails = {
       estudo: {
         title: "📚 Rotina de Estudos",
         details: [
           "<b>08:00 - 09:30:</b> Leitura de documentação técnica e livros.",
-          "<b>14:00 - 15:30:</b> Aulas práticas da Imersão IA e projetos no GitHub.",
-          "<b>20:00 - 20:45:</b> Prática de idiomas e revisão diária.",
-          "<b>Dica de Produtividade:</b> Utilize a técnica Pomodoro (25 min foco / 5 min pausa)."
+          "<b>14:00 - 15:30:</b> Prática de programação e projetos no GitHub.",
+          "<b>20:00 - 20:45:</b> Prática de idiomas e revisão dos aprendizados do dia.",
+          "<b>Dica de Produtividade:</b> Aplique a Técnica Pomodoro (25 min foco total / 5 min pausa)."
         ]
       },
       trabalho: {
         title: "💼 Rotina de Trabalho",
         details: [
-          "<b>09:00 - 09:30:</b> Alinhamento de metas e Daily Meeting.",
-          "<b>09:30 - 12:00:</b> Bloco de trabalho profundo (Deep Work) sem distrações.",
-          "<b>13:30 - 17:00:</b> Reuniões, respostas a e-mails e revisão de entregas.",
-          "<b>Dica de Produtividade:</b> Resolva as tarefas mais difíceis logo no primeiro bloco do dia."
+          "<b>09:00 - 09:30:</b> Organização do backlog e Daily Meeting.",
+          "<b>09:30 - 12:00:</b> Bloco de Trabalho Profundo (Deep Work) focado nas prioridades.",
+          "<b>13:30 - 17:00:</b> Reuniões, atendimento de demandas e alinhamentos de equipe.",
+          "<b>Dica de Produtividade:</b> Resolva a tarefa de maior impacto nas primeiras horas do dia."
         ]
       },
       lazer: {
         title: "🎬 Rotina de Lazer",
         details: [
-          "<b>18:30 - 19:30:</b> Assistir a um episódio da sua série favorita ou ler algo leve.",
-          "<b>Fim de Semana:</b> Passeio ao ar livre, cinema ou jogos com amigos.",
-          "<b>Meta:</b> Manter a mente leve e desconectada do trabalho."
+          "<b>18:30 - 19:30:</b> Assistir a um episódio de série ou filme.",
+          "<b>Fim de Semana:</b> Passeio ao ar livre, encontros sociais ou jogos.",
+          "<b>Objetivo:</b> Desconectar totalmente das responsabilidades profissionais."
         ]
       },
       hobby: {
         title: "🎨 Rotina de Hobby",
         details: [
-          "<b>19:30 - 20:30:</b> Tocar instrumento musical ou praticar pintura/desenho.",
-          "<b>Projetos Pessoais:</b> Dedicar ao menos 3 horas no fim de semana para projetos autorais.",
-          "<b>Objetivo:</b> Explorar a criatividade sem cobranças de prazos."
+          "<b>19:30 - 20:30:</b> Tocar um instrumento musical ou praticar pintura/desenho.",
+          "<b>Fim de Semana:</b> Dedicar ao menos 2 horas para projetos pessoais criativos.",
+          "<b>Objetivo:</b> Estimular a imaginação e a expressão pessoal sem prazos."
         ]
       },
       esportes: {
         title: "⚡ Rotina de Esportes",
         details: [
-          "<b>06:30 - 07:30:</b> Treino funcional / Musculação / Corrida.",
-          "<b>Ao longo do dia:</b> Alongamentos rápidos a cada 2 horas sentadas.",
-          "<b>Meta Semanal:</b> Praticar atividades físicas no mínimo 4 vezes por semana."
+          "<b>06:30 - 07:30:</b> Treino de força / Musculação / Corrida outdoor.",
+          "<b>Ao longo do dia:</b> Pausas de 2 minutos a cada hora para alongamento.",
+          "<b>Meta Semanal:</b> Manter a constância de pelo menos 4 treinos por semana."
         ]
       },
       saude: {
         title: "🧘 Rotina de Saúde & Bem-Estar",
         details: [
-          "<b>07:30:</b> Meditação guiada e exercícios de respiração (10 min).",
-          "<b>Hidratação:</b> Beber no mínimo 2,5 litros de água diariamente.",
-          "<b>Sono:</b> Desconectar das telas às 22:00 para garantir 8 horas de descanso."
+          "<b>07:30:</b> Meditação guiada e exercícios de respiração consciente (10 min).",
+          "<b>Hidratação:</b> Beber no mínimo 2,5L a 3L de água ao longo do dia.",
+          "<b>Higiene do Sono:</b> Desligar telas 1 hora antes de dormir para garantir 8h de sono."
         ]
       }
     };
@@ -171,6 +299,13 @@
         closeModal();
       }
     }
+
+    // Fechar modal ao pressionar a tecla ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
   </script>
 </body>
 </html>
