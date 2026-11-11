@@ -1,4 +1,4 @@
-/* Reset Básico */
+/* Reset global de estilos */
 * {
   margin: 0;
   padding: 0;
@@ -6,82 +6,31 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Fundo Preto com Esferas 3D Flutuantes */
+/* Fundo Preto com ajuste para o Canvas 3D */
 body {
   background-color: #050508;
   color: #ffffff;
   min-height: 100vh;
   overflow-x: hidden;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
-/* Degradê de 3 Cores: Roxo Elétrico, Azul Neon e Rosa Magenta */
+/* Paleta de Cores em Gradient (Roxo Elétrico, Azul Neon e Rosa Magenta) */
 :root {
   --grad-1: #8a2be2;
   --grad-2: #00d2ff;
   --grad-3: #ff007f;
 }
 
-/* Objetos 3D Flutuantes ao Fundo */
-.bg-shape {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.5;
+/* Canvas 3D de fundo (Fixado atrás de todo o conteúdo) */
+#bg-3d {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   z-index: 0;
-  animation: float 10s infinite ease-in-out alternate;
-}
-
-.shape-1 {
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, var(--grad-1), transparent);
-  top: 5%;
-  left: 10%;
-  animation-duration: 8s;
-}
-
-.shape-2 {
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, var(--grad-2), transparent);
-  bottom: 10%;
-  right: 10%;
-  animation-duration: 12s;
-}
-
-.shape-3 {
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, var(--grad-3), transparent);
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation-duration: 10s;
-}
-
-.shape-4 {
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, var(--grad-2), var(--grad-1));
-  bottom: 5%;
-  left: 20%;
-  animation-duration: 9s;
-}
-
-@keyframes float {
-  0% {
-    transform: translateY(0px) rotate(0deg) scale(1);
-  }
-  50% {
-    transform: translateY(-30px) rotate(180deg) scale(1.1);
-  }
-  100% {
-    transform: translateY(20px) rotate(360deg) scale(0.95);
-  }
+  pointer-events: none;
 }
 
 /* Estrutura Container */
@@ -93,7 +42,7 @@ body {
   z-index: 1;
 }
 
-/* Cabeçalho */
+/* Cabeçalho com Título Moderno */
 .header {
   text-align: center;
   margin-bottom: 50px;
@@ -104,8 +53,8 @@ body {
   font-weight: 800;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #fff;
-  text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+  color: #ffffff;
+  text-shadow: 0 5px 15px rgba(0, 0, 0, 0.8);
 }
 
 .title-3d span {
@@ -123,15 +72,16 @@ body {
 /* Grid de Cards */
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 25px;
 }
 
-/* Estilo dos Cards (Efeito Glassmorphism 3D) */
+/* Estilo dos Cards (Efeito Glassmorphism com elevação 3D ao passar o mouse) */
 .card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
+  background: rgba(18, 18, 24, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-radius: 20px;
   padding: 30px;
   cursor: pointer;
@@ -144,9 +94,9 @@ body {
 }
 
 .card:hover {
-  transform: translateY(-10px) scale(1.02);
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 20px 40px rgba(138, 43, 226, 0.3);
+  transform: translateY(-12px) scale(1.03);
+  border-color: rgba(0, 210, 255, 0.4);
+  box-shadow: 0 20px 40px rgba(138, 43, 226, 0.35), 0 0 20px rgba(0, 210, 255, 0.2);
 }
 
 .card-icon {
@@ -172,20 +122,21 @@ body {
   padding: 5px 12px;
   border-radius: 20px;
   background: linear-gradient(135deg, var(--grad-1), var(--grad-3));
-  color: #fff;
+  color: #ffffff;
   font-weight: 600;
   text-transform: uppercase;
 }
 
-/* Modal Window */
+/* Estrutura do Modal Overlays */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.85);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -201,14 +152,14 @@ body {
 }
 
 .modal-content {
-  background: #121218;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(18, 18, 24, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 24px;
   padding: 40px;
   max-width: 500px;
   width: 90%;
   position: relative;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 210, 255, 0.2);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(0, 210, 255, 0.25);
   transform: scale(0.8);
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -230,7 +181,7 @@ body {
 }
 
 .close-btn:hover {
-  color: #fff;
+  color: #ffffff;
 }
 
 #modal-body h2 {
@@ -255,5 +206,5 @@ body {
 }
 
 #modal-body b {
-  color: #fff;
+  color: #ffffff;
 }
