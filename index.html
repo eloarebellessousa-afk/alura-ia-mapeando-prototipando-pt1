@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organizador de Rotinas Moderno</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Elementos 3D Flutuantes de Fundo -->
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+  <div class="bg-shape shape-3"></div>
+  <div class="bg-shape shape-4"></div>
+
+  <!-- Conteúdo Principal -->
+  <div class="container">
+    <header class="header">
+      <h1 class="title-3d">Minha Rotina <span>Diária</span></h1>
+      <p class="subtitle">Organize seu dia com foco, equilíbrio e alta performance.</p>
+    </header>
+
+    <main class="grid-container">
+
+      <!-- Card 1: Estudo -->
+      <div class="card" onclick="openModal('estudo')">
+        <div class="card-icon">📚</div>
+        <h3>Estudos</h3>
+        <p>Aprimoramento contínuo, leitura e cursos.</p>
+        <span class="card-badge">Foco</span>
+      </div>
+
+      <!-- Card 2: Trabalho -->
+      <div class="card" onclick="openModal('trabalho')">
+        <div class="card-icon">💼</div>
+        <h3>Trabalho</h3>
+        <p>Projetos, reuniões e entregas prioritárias.</p>
+        <span class="card-badge">Produção</span>
+      </div>
+
+      <!-- Card 3: Lazer -->
+      <div class="card" onclick="openModal('lazer')">
+        <div class="card-icon">🎬</div>
+        <h3>Lazer</h3>
+        <p>Filmes, séries e momentos de descanso.</p>
+        <span class="card-badge">Desconexão</span>
+      </div>
+
+      <!-- Card 4: Hobby -->
+      <div class="card" onclick="openModal('hobby')">
+        <div class="card-icon">🎨</div>
+        <h3>Hobby</h3>
+        <p>Criatividade, música e paixões pessoais.</p>
+        <span class="card-badge">Criação</span>
+      </div>
+
+      <!-- Card 5: Esportes -->
+      <div class="card" onclick="openModal('esportes')">
+        <div class="card-icon">⚡</div>
+        <h3>Esportes</h3>
+        <p>Treinos, mobilidade e exercícios físicos.</p>
+        <span class="card-badge">Energia</span>
+      </div>
+
+      <!-- Card 6: Saúde -->
+      <div class="card" onclick="openModal('saude')">
+        <div class="card-icon">🧘</div>
+        <h3>Saúde</h3>
+        <p>Meditação, hidratação e alimentação consciente.</p>
+        <span class="card-badge">Equilíbrio</span>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Modal Overlays -->
+  <div id="modal" class="modal-overlay" onclick="closeModalOnOverlay(event)">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <div id="modal-body">
+        <!-- O conteúdo será preenchido via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Código JavaScript Embutido -->
+  <script>
+    // Dados detalhados para cada categoria de rotina
+    const routineDetails = {
+      estudo: {
+        title: "📚 Rotina de Estudos",
+        details: [
+          "<b>08:00 - 09:30:</b> Leitura de documentação técnica e livros.",
+          "<b>14:00 - 15:30:</b> Aulas práticas da Imersão IA e projetos no GitHub.",
+          "<b>20:00 - 20:45:</b> Prática de idiomas e revisão diária.",
+          "<b>Dica de Produtividade:</b> Utilize a técnica Pomodoro (25 min foco / 5 min pausa)."
+        ]
+      },
+      trabalho: {
+        title: "💼 Rotina de Trabalho",
+        details: [
+          "<b>09:00 - 09:30:</b> Alinhamento de metas e Daily Meeting.",
+          "<b>09:30 - 12:00:</b> Bloco de trabalho profundo (Deep Work) sem distrações.",
+          "<b>13:30 - 17:00:</b> Reuniões, respostas a e-mails e revisão de entregas.",
+          "<b>Dica de Produtividade:</b> Resolva as tarefas mais difíceis logo no primeiro bloco do dia."
+        ]
+      },
+      lazer: {
+        title: "🎬 Rotina de Lazer",
+        details: [
+          "<b>18:30 - 19:30:</b> Assistir a um episódio da sua série favorita ou ler algo leve.",
+          "<b>Fim de Semana:</b> Passeio ao ar livre, cinema ou jogos com amigos.",
+          "<b>Meta:</b> Manter a mente leve e desconectada do trabalho."
+        ]
+      },
+      hobby: {
+        title: "🎨 Rotina de Hobby",
+        details: [
+          "<b>19:30 - 20:30:</b> Tocar instrumento musical ou praticar pintura/desenho.",
+          "<b>Projetos Pessoais:</b> Dedicar ao menos 3 horas no fim de semana para projetos autorais.",
+          "<b>Objetivo:</b> Explorar a criatividade sem cobranças de prazos."
+        ]
+      },
+      esportes: {
+        title: "⚡ Rotina de Esportes",
+        details: [
+          "<b>06:30 - 07:30:</b> Treino funcional / Musculação / Corrida.",
+          "<b>Ao longo do dia:</b> Alongamentos rápidos a cada 2 horas sentadas.",
+          "<b>Meta Semanal:</b> Praticar atividades físicas no mínimo 4 vezes por semana."
+        ]
+      },
+      saude: {
+        title: "🧘 Rotina de Saúde & Bem-Estar",
+        details: [
+          "<b>07:30:</b> Meditação guiada e exercícios de respiração (10 min).",
+          "<b>Hidratação:</b> Beber no mínimo 2,5 litros de água diariamente.",
+          "<b>Sono:</b> Desconectar das telas às 22:00 para garantir 8 horas de descanso."
+        ]
+      }
+    };
+
+    function openModal(category) {
+      const modal = document.getElementById("modal");
+      const modalBody = document.getElementById("modal-body");
+      const data = routineDetails[category];
+
+      if (data) {
+        let listHtml = "<ul>";
+        data.details.forEach(item => {
+          listHtml += `<li>${item}</li>`;
+        });
+        listHtml += "</ul>";
+
+        modalBody.innerHTML = `
+          <h2>${data.title}</h2>
+          ${listHtml}
+        `;
+
+        modal.classList.add("active");
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("modal");
+      modal.classList.remove("active");
+    }
+
+    function closeModalOnOverlay(event) {
+      if (event.target.id === "modal") {
+        closeModal();
+      }
+    }
+  </script>
+</body>
+</html>
